@@ -14,58 +14,7 @@ import { RouterLink } from "vue-router";
         <input type="checkbox" id="toggler" />
         <label for="toggler"><i class="ri-menu-line"></i></label>
         <div class="menu">
-          <ul class="list">
-            <li><RouterLink to="/">Home</RouterLink></li>
-            <li>
-              <div class="dropdown">
-                <button class="dropbtn">
-                  Year 1
-                  <i class="fa fa-caret-down"></i>
-                </button>
-                <div class="dropdown-content">
-                  <RouterLink to="/units_view">Semester 1</RouterLink>
-                  <RouterLink to="/units_view">Semester 2</RouterLink>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="dropdown">
-                <button class="dropbtn">
-                  Year 2
-                  <i class="fa fa-caret-down"></i>
-                </button>
-                <div class="dropdown-content">
-                  <RouterLink to="/units_view">Semester 1</RouterLink>
-                  <RouterLink to="/units_view">Semester 2</RouterLink>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="dropdown">
-                <button class="dropbtn">
-                  Year 3
-                  <i class="fa fa-caret-down"></i>
-                </button>
-                <div class="dropdown-content">
-                  <RouterLink to="/units_view">Semester 1</RouterLink>
-                  <RouterLink to="/units_view">Semester 2</RouterLink>
-                  <RouterLink to="/units_view">Semester 3</RouterLink>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="dropdown">
-                <button class="dropbtn">
-                  Year 4
-                  <i class="fa fa-caret-down"></i>
-                </button>
-                <div class="dropdown-content">
-                  <RouterLink to="/units_view">Semester 1</RouterLink>
-                  <RouterLink to="/units_view">Semester 2</RouterLink>
-                </div>
-              </div>
-            </li>
-          </ul>
+          <ul class="list"></ul>
         </div>
         <div class="nav_search_bar">
           <input type="search" placeholder="Search.." /><i

@@ -5,7 +5,11 @@ import Navbar from "../components/Navbar.vue";
 <template>
   <div class="units_container">
     <Navbar />
-
     <UnitParent />
   </div>
 </template>
+<style scoped>
+.units_container{
+  display: grid;
+}
+</style>

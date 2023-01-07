@@ -1,85 +1,382 @@
 <script setup>
-import { RouterLink } from "vue-router";
-const semester = {
-  title: "Semester 1",
-  units: [
-    {
-      title: "Semester 1",
-      unit: "GUCC 100 Computer Application skills",
-    },
-    {
-      title: "Semester 1",
-      unit: "GUCC 102 National Cohesion & Integration",
-    },
-    {
-      title: "Semester 1",
-      unit: "GUCC 103 Quantitative Skills",
-    },
-    {
-      title: "Semester 1",
-      unit: "BSCS 100 Discrete Structures I",
-    },
-    {
-      title: "Semester 1",
-      unit: "BSCS 101 Fundamentals of Computing",
-    },
-    {
-      title: "Semester 1",
-      unit: "BSCS 102 Principles of Operating Systems",
-    },
-    {
-      title: "Semester 1",
-      unit: "unit 7",
-    },
-  ],
-};
-</script>
+import { onBeforeMount, onMounted, ref, watch } from "vue";
+import { RouterLink, useRouter } from "vue-router";
+import { getApi } from "../api/endpoint";
+import Footer from "../components/Footer.vue";
 
+const router = useRouter();
+const units = ref([]);
+const course_types = ref([]);
+const selectedCourseTypeId = ref(null);
+const courses = ref([]);
+const selectedCourseId = ref(null);
+const semesters = ref([]);
+const selectedSemesterNameId = ref(null);
+const years = ref([]);
+const selectedYearId = ref(null);
+
+// redirect to units document page
+const redirectToUnitDocuments = (unit_id) => {
+  router.push({
+    name: "unit_documents",
+    params: {
+      unit_id: unit_id,
+      year_id: selectedYearId.value,
+      course_id: selectedCourseId.value,
+      semester_name_id: selectedSemesterNameId.value,
+      course_type_id: selectedCourseTypeId.value,
+    },
+  });
+};
+
+const loadUnitsWithDocsApi = () => {
+  const url = "/core/course_class_units";
+  return getApi.get(url, {
+    params: {
+      year_id: selectedYearId.value,
+      course_id: selectedCourseId.value,
+      semester_name_id: selectedSemesterNameId.value,
+      course_type_id: selectedCourseTypeId.value,
+    },
+  });
+};
+
+const handleCourseTypeChange = () => {
+  console.log(selectedCourseTypeId.value);
+  console.log(selectedCourseId.value);
+  console.log(selectedSemesterNameId.value);
+  console.log(selectedYearId.value);
+
+  loadUnitsWithDocsApi()
+    .then((response) => {
+      console.log(response.data);
+      units.value = response.data;
+    })
+    .catch((error) => {
+      // check whether error is from network or backend
+      if (error.code == "ERR_NETWORK") {
+        console.log("Network Error");
+        //   show_popup_error(toast, "Cannot Connect to the server", "Network Error")
+      } else {
+        // error from the backend
+        const error_data = error.response.data;
+        console.log(error_data);
+        //   show_popup_error(toast, "Error Loading Carousel", "Error")
+      }
+      // stop_loader(is_loading)
+    });
+};
+
+const semesterFilterViewApi = () => {
+  const url = "/core/semester_filter";
+  return getApi.get(url, {
+    params: {
+      course_id: selectedCourseId.value,
+      course_type_id: selectedCourseTypeId.value,
+    },
+  });
+};
+
+const check_courseType_courseId = () => {
+  if (selectedCourseId.value && selectedCourseId) {
+    // call the semesters filter view
+    semesterFilterViewApi()
+      .then((response) => {
+        console.log(response.data);
+        semesters.value = response.data;
+      })
+      .catch((error) => {
+        // check whether error is from network or backend
+        if (error.code == "ERR_NETWORK") {
+          console.log("Network Error");
+          //   show_popup_error(toast, "Cannot Connect to the server", "Network Error")
+        } else {
+          // error from the backend
+          const error_data = error.response.data;
+          console.log(error_data);
+          //   show_popup_error(toast, "Error Loading Carousel", "Error")
+        }
+        // stop_loader(is_loading)
+      });
+  }
+};
+
+watch([selectedCourseTypeId, selectedCourseId], () => {
+  check_courseType_courseId();
+
+  // continue
+});
+
+const getCourseTypesApi = () => {
+  const url = "/core/course_type_list_view";
+  return getApi.get(url);
+};
+
+const getCoursesApi = () => {
+  const url = "/core/course_list";
+  return getApi.get(url);
+};
+
+const getYearsApi = () => {
+  const url = "/core/year_list";
+  return getApi.get(url);
+};
+
+onMounted(() => {
+  getYearsApi()
+    .then((response) => {
+      console.log(response.data);
+      years.value = response.data;
+    })
+    .catch((error) => {
+      // check whether error is from network or backend
+      if (error.code == "ERR_NETWORK") {
+        console.log("Network Error");
+        //   show_popup_error(toast, "Cannot Connect to the server", "Network Error")
+      } else {
+        // error from the backend
+        const error_data = error.response.data;
+        console.log(error_data);
+        //   show_popup_error(toast, "Error Loading Carousel", "Error")
+      }
+      // stop_loader(is_loading)
+    });
+
+  getCourseTypesApi()
+    .then((response) => {
+      console.log(response.data);
+      course_types.value = response.data;
+    })
+    .catch((error) => {
+      // check whether error is from network or backend
+      if (error.code == "ERR_NETWORK") {
+        console.log("Network Error");
+        //   show_popup_error(toast, "Cannot Connect to the server", "Network Error")
+      } else {
+        // error from the backend
+        const error_data = error.response.data;
+        console.log(error_data);
+        //   show_popup_error(toast, "Error Loading Carousel", "Error")
+      }
+      // stop_loader(is_loading)
+    });
+
+  // fetch courses
+  getCoursesApi()
+    .then((response) => {
+      console.log(response.data);
+      courses.value = response.data;
+    })
+    .catch((error) => {
+      // check whether error is from network or backend
+      if (error.code == "ERR_NETWORK") {
+        console.log("Network Error");
+        //   show_popup_error(toast, "Cannot Connect to the server", "Network Error")
+      } else {
+        // error from the backend
+        const error_data = error.response.data;
+        console.log(error_data);
+        //   show_popup_error(toast, "Error Loading Carousel", "Error")
+      }
+      // stop_loader(is_loading)
+    });
+});
+</script>
 
 <template>
   <div class="units_container">
-    <div class="units_title">
-      <h1>
-        {{ semester.title }}
-      </h1>
+    <div class="page_wrapper">
+      <!-- HEADER INFO -->
+      <div class="header_info">
+        <h1>A simple and easier way of accessing your courses' PDF notes.</h1>
+        <span>
+          You can select your year of study and semester whose notes you want to
+          download.
+        </span>
+      </div>
+
+      <!-- MINI COURSE NAV -->
+      <div class="mini_select_nav">
+        <div class="select_option">
+          <label for="select">Year:</label>
+          <select
+            name="year"
+            id="select"
+            class="select-class"
+            v-model="selectedYearId"
+          >
+            <option :value="year.id" v-for="year in years">
+              {{ year.name }}
+            </option>
+          </select>
+        </div>
+        <div class="select_option">
+          <label for="select">CourseType:</label>
+          <select
+            name="course_type"
+            id="select"
+            class="select-class"
+            v-model="selectedCourseTypeId"
+          >
+            <option :value="course_type.id" v-for="course_type in course_types">
+              {{ course_type.name }}
+            </option>
+          </select>
+        </div>
+        <div class="select_option">
+          <label for="select">Course Name:</label>
+          <select
+            name="course_name"
+            id="select"
+            class="select-class"
+            v-model="selectedCourseId"
+          >
+            <option :value="course.id" v-for="course in courses">
+              {{ course.name }}
+            </option>
+          </select>
+        </div>
+        <div class="select_option">
+          <label for="select">Semester:</label>
+          <select
+            name="semester"
+            id="select"
+            class="select-class"
+            v-model="selectedSemesterNameId"
+          >
+            <option
+              :value="semester.semester_name"
+              v-for="semester in semesters"
+            >
+              {{ semester.semester_str_name }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <!-- LOAD FILES BUTTON -->
+      <div class="mini_select_nav_btn">
+        <button type="button" @click="handleCourseTypeChange">
+          Load Documents
+        </button>
+      </div>
     </div>
+
+    <!-- UNITS_RESPONSE -->
     <div class="units_wrappper">
-      <div
-        class="unit_cont_wrapper"
-        v-for="name in semester.units"
-        :key="name.title"
-      >
-        <RouterLink to="/">
+      <div class="unit_cont_wrapper" v-for="unit in units" :key="unit.id">
+        <a href="#" @click="redirectToUnitDocuments(unit.id)">
           <div class="unit_title">
-            {{ name.unit }}
+            {{ unit.name }}
           </div>
           <div class="unit_icon">
             <i class="fa-solid fa-up-right-from-square"></i>
           </div>
-        </RouterLink>
+        </a>
       </div>
     </div>
+    <Footer />
   </div>
 </template>
 <style scoped>
 .units_container {
-  width: 80%;
-  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   margin: auto;
-  padding: 6px 12px;
+  height: 85vh;
+}
+.page_wrapper {
+  width: 80%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+.header_info {
+  width: 80%;
+  margin: 10px auto;
+  color: var(--light-text);
+}
+.header_info h1 {
+  font-size: 44px;
+  font-weight: 900;
+}
+.header_info span {
+  font-size: 20px;
+  font-weight: 300;
+}
+.mini_select_nav {
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  width: 100%;
+  height: 100px;
+  padding: 0 6px;
+  margin: 10px auto;
+}
+.select_option {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 4px;
+}
+.mini_select_nav_btn {
+  margin: 4% auto;
+}
+.mini_select_nav_btn button {
+  color: var(--dark-text);
+  border: none;
+  background: var(--light-background);
+  font-size: 18px;
+  font-weight: 700;
+  padding: 6px 8px;
+  cursor: pointer;
+  border-radius: 6px;
+  margin: auto;
+}
+.mini_select_nav_btn button:hover {
+  background: var(--dim-dark-background);
+}
+.mini_select_nav label {
+  font-size: 18px;
+  margin-right: 8px;
+  color: var(--light-text);
+}
+.mini_select_nav select {
+  border: 1px solid var(--light-background);
+  border-radius: 4px;
+  font-size: 18px;
+  font-weight: 300;
+  padding: 6px 8px;
+  color: var(--light-text);
+  text-transform: capitalize;
+  cursor: pointer;
+}
+.mini_select_nav option {
+  background: var(--light-background);
+  color: var(--dark-text);
+  cursor: pointer;
 }
 .units_wrappper {
   position: relative;
-  width: 80%;
+  width: 90%;
   display: flex;
   flex-wrap: wrap;
-  flex-direction: column;
   justify-content: center;
-  height: 50vh;
   gap: 4%;
+  margin: auto;
+  margin-bottom: 12px;
 }
 .unit_cont_wrapper {
-  width: 60%;
+  width: 45%;
   border: 1px solid var(--extra-light-color);
   padding: 10px 0;
   display: flex;
@@ -88,6 +385,7 @@ const semester = {
   align-items: center;
   border-radius: 4px;
   margin: 12px auto;
+  flex-direction: column;
 }
 .unit_cont_wrapper a {
   display: flex;
