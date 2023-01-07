@@ -188,7 +188,7 @@ onMounted(() => {
     <div class="page_wrapper">
       <!-- HEADER INFO -->
       <div class="header_info">
-        <h1>A simple and easier way of accessing your courses' PDF notes.</h1>
+        <p>A simple and easier way of accessing your courses' PDF notes.</p>
         <span>
           You can select your year of study and semester whose notes you want to
           download.
@@ -279,6 +279,77 @@ onMounted(() => {
   </div>
 </template>
 <style scoped>
+/* SMAL DEVICES */
+@media only screen and (max-width: 768px) and (min-width: 320px) {
+  .units_container {
+    width: 100%;
+  }
+  .page_wrapper {
+    width: 100% !important;
+  }
+  .header_info {
+    width: 100%;
+  }
+  .header_info p {
+    font-size: 34px !important;
+    font-weight: 900;
+  }
+  .header_info span {
+    font-size: 18px !important;
+  }
+  .mini_select_nav {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 55vh !important;
+    padding: 10px 0;
+  }
+  .select_option {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+  }
+  .select_option label {
+    margin: 2px;
+    text-align: left;
+    width: 100%;
+  }
+  .select_option select {
+    width: 100%;
+    outline: none;
+  }
+  .mini_select_nav option {
+    width: 100%;
+    color: var(--dark-text);
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+  }
+  .mini_select_nav_btn {
+    width: 80%;
+    margin: auto;
+    display: flex;
+    align-items: center;
+  }
+  .units_wrappper {
+    width: 100%;
+  }
+  .unit_cont_wrapper {
+    padding: 4px;
+    font-size: 75%;
+  }
+  .unit_title {
+    font-size: 16px !important;
+  }
+  .unit_cont_wrapper a {
+    padding: 4px;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+/* LARGE DEVICES */
 .units_container {
   width: 100%;
   display: flex;
@@ -302,7 +373,7 @@ onMounted(() => {
   margin: 10px auto;
   color: var(--light-text);
 }
-.header_info h1 {
+.header_info p {
   font-size: 44px;
   font-weight: 900;
 }
