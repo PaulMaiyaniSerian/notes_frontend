@@ -209,7 +209,7 @@ onMounted(() => {
             class="select-class"
             v-model="selectedYearId"
           >
-            <option :value="year.id" v-for="year in years">
+            <option :value="year.id" v-for="year in years" :key="year.id">
               {{ year.name }}
             </option>
           </select>
@@ -222,7 +222,7 @@ onMounted(() => {
             class="select-class"
             v-model="selectedCourseTypeId"
           >
-            <option :value="course_type.id" v-for="course_type in course_types">
+            <option :value="course_type.id" v-for="course_type in course_types" :key="course_type.id">
               {{ course_type.name }}
             </option>
           </select>
@@ -235,7 +235,7 @@ onMounted(() => {
             class="select-class"
             v-model="selectedCourseId"
           >
-            <option :value="course.id" v-for="course in courses">
+            <option :value="course.id" v-for="course in courses" :key="course.id">
               {{ course.name }}
             </option>
           </select>
@@ -251,7 +251,7 @@ onMounted(() => {
             <option
               :value="semester.semester_name"
               v-for="semester in semesters"
-            >
+            :key="semester.semester_name_id">
               {{ semester.semester_str_name }}
             </option>
           </select>
@@ -260,7 +260,7 @@ onMounted(() => {
 
       <!-- LOAD FILES BUTTON -->
       <div class="mini_select_nav_btn">
-        <button type="button" @click="handleCourseTypeChange">
+        <button type="button" @click.prevent="handleCourseTypeChange">
           Load Documents
         </button>
       </div>
@@ -269,7 +269,7 @@ onMounted(() => {
     <!-- UNITS_RESPONSE -->
     <div class="units_wrappper">
       <div class="unit_cont_wrapper" v-for="unit in units" :key="unit.id">
-        <a href="#" @click="redirectToUnitDocuments(unit.id)">
+        <a href="#" @click.prevent="redirectToUnitDocuments(unit.id)">
           <div class="unit_title">
             {{ unit.name }}
           </div>
