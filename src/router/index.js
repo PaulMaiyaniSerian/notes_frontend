@@ -5,12 +5,12 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/main',
+      path: '/',
       name: 'main',
       component: UnitsView
     },
     {
-      path: '/main/year/:year_id/course/:course_id/semester/:semester_name_id/course_type/:course_type_id/unit/:unit_id/documents',
+      path: '/year/:year_id/course/:course_id/semester/:semester_name_id/course_type/:course_type_id/unit/:unit_id/documents',
       name: 'unit_documents',
       component: UnitsPage
     },
