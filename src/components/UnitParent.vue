@@ -194,8 +194,8 @@ onMounted(() => {
           <span class="under_score">_</span>
         </p>
         <span class="info_desc">
-          You can select your year of study and semester whose notes you want to
-          download.
+          Simply select your preffered options below to choose the units whose
+          notes you want to download.
         </span>
       </div>
 
