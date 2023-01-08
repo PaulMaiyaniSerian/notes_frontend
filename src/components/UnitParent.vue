@@ -209,7 +209,8 @@ onMounted(() => {
             class="select-class"
             v-model="selectedYearId"
           >
-            <option :value="year.id" v-for="year in years" :key="year.id">
+            <!-- ADDED A KEY -->
+            <option :value="year.id" v-for="year in years" :key="year">
               {{ year.name }}
             </option>
           </select>
@@ -222,7 +223,12 @@ onMounted(() => {
             class="select-class"
             v-model="selectedCourseTypeId"
           >
-            <option :value="course_type.id" v-for="course_type in course_types" :key="course_type.id">
+            <!-- ADDED A KEY -->
+            <option
+              :value="course_type.id"
+              v-for="course_type in course_types"
+              :key="course_type"
+            >
               {{ course_type.name }}
             </option>
           </select>
@@ -235,7 +241,8 @@ onMounted(() => {
             class="select-class"
             v-model="selectedCourseId"
           >
-            <option :value="course.id" v-for="course in courses" :key="course.id">
+            <!-- ADDED A KEY -->
+            <option :value="course.id" v-for="course in courses" :key="course">
               {{ course.name }}
             </option>
           </select>
@@ -248,10 +255,12 @@ onMounted(() => {
             class="select-class"
             v-model="selectedSemesterNameId"
           >
+            <!-- ADDED A KEY -->
             <option
               :value="semester.semester_name"
               v-for="semester in semesters"
-            :key="semester.semester_name_id">
+              :key="semester.semester"
+            >
               {{ semester.semester_str_name }}
             </option>
           </select>

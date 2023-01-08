@@ -6,7 +6,7 @@ import { onMounted, ref } from "vue";
 import { getApi } from "../api/endpoint";
 import axios from "axios";
 import { RouterLink } from "vue-router";
-import { listenerCount } from "process";
+// import { listenerCount } from "process";
 
 // state
 const route = useRoute();
@@ -89,7 +89,12 @@ const downloadFile = async (doc) => {
       </div>
       <div class="document_container">
         <ol class="documents_list">
-          <li v-for="document in documents" :key="document.id" @click.prevent="downloadFile(document)">
+          <!-- ADDED A KEY -->
+          <li
+            v-for="document in documents"
+            :key="document"
+            @click.prevent="downloadFile(document)"
+          >
             <a>{{ getFileName(document.document) }} </a>
           </li>
         </ol>
