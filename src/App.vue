@@ -2,7 +2,7 @@
 import { RouterView } from "vue-router";
 </script>
 <template>
-  <RouterView :key="$route.path" />
+  <RouterView />
 </template>
 <style>
 * {
