@@ -11,11 +11,6 @@ import { RouterLink } from "vue-router";
             <h1>PDF.Notes</h1>
           </RouterLink>
         </div>
-        <input type="checkbox" id="toggler" />
-        <label for="toggler"><i class="ri-menu-line"></i></label>
-        <div class="menu">
-          <ul class="list"></ul>
-        </div>
         <div class="nav_search_bar">
           <input type="search" placeholder="Search.." /><i
             class="fa fa-search"
@@ -27,10 +22,43 @@ import { RouterLink } from "vue-router";
 </template>
 
 <style scoped>
+/* SMAL DEVICES */
+@media only screen and (max-width: 768px) and (min-width: 320px) {
+  .wrapper {
+    margin: auto;
+    padding: 0;
+  }
+  .container {
+    width: 100%;
+    margin: 16px auto;
+    padding: 0;
+  }
+  .navbar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-content: center;
+    padding: 0;
+  }
+  .logo {
+    width: 100%;
+    margin: auto;
+    margin-bottom: 12px;
+  }
+  .nav_search_bar {
+    width: 100%;
+    margin: auto;
+  }
+  .nav_search_bar input {
+    width: 100% !important;
+  }
+}
+/* LARGE DEVICES */
 .container {
-  max-width: 95%;
+  width: 95%;
   margin: 16px auto;
   padding: 15px;
+  position: relative;
 }
 .navbar {
   display: flex;
@@ -41,8 +69,7 @@ import { RouterLink } from "vue-router";
   border-radius: 4px;
   background: var(--light-dark-rgba);
 }
-.navbar a,
-.dropbtn {
+.navbar a {
   text-decoration: none;
   color: var(--extra-light-color);
   cursor: pointer;
@@ -53,52 +80,9 @@ import { RouterLink } from "vue-router";
   font-weight: 300;
 }
 .logo h1 {
-  margin-right: 50px;
   text-transform: uppercase;
   font-weight: 800;
 }
-.menu {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.list {
-  list-style: none;
-  display: flex;
-  gap: 3em;
-  font-size: 16px;
-}
-#toggler,
-.navbar label {
-  display: none;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: var(--light-background);
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px var(--light-dark-rgba);
-  z-index: 1;
-}
-
-.dropdown-content a {
-  float: none;
-  color: var(--extra-dark-color);
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  text-align: left;
-}
-
-.dropdown-content a:hover {
-  background-color: var(--dim-light-text);
-}
-
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
 .nav_search_bar {
   margin: 0 14px;
   display: flex;
@@ -124,24 +108,8 @@ import { RouterLink } from "vue-router";
   position: absolute;
   right: 4%;
 }
-@media screen and (max-width: 600px) {
-  .menu {
-    width: 100%;
-    max-height: 0;
-    overflow: hidden;
-  }
-  .list {
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-  }
-  .navbar label {
-    display: inline-flex;
-    align-items: center;
-    cursor: pointer;
-  }
-  #toggler:checked ~ .menu {
-    max-height: 100%;
-  }
-}
+
+/* @media screen and (max-width: 600px) {
+ 
+} */
 </style>

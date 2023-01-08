@@ -83,6 +83,7 @@ const downloadFile = async (doc) => {
 <template>
   <div class="units_container">
     <Navbar />
+
     <div class="units_wrapper">
       <div class="back_btn">
         <RouterLink to="/"> Back </RouterLink>
@@ -95,11 +96,46 @@ const downloadFile = async (doc) => {
         </ol>
       </div>
     </div>
-    <Footer />
+    <div class="footer_cont">
+      <div class="footer_item">
+        <Footer />
+      </div>
+    </div>
   </div>
 </template>
 
 <style scoped>
+/* SMAL DEVICES */
+@media only screen and (max-width: 768px) and (min-width: 320px) {
+  .footer_item {
+    position: fixed;
+    width: 100%;
+  }
+  .document_container {
+    position: relative !important;
+  }
+  .back_btn {
+    margin: 12px auto !important;
+  }
+  .documents_list {
+    position: relative !important;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .documents_list li {
+    width: 50% !important;
+    flex: 1 0 40%;
+    font-size: 12px;
+  }
+  .footer_cont {
+    position: absolute;
+    width: 100%;
+    top: 94%;
+  }
+}
+
+/* LARGE DEVICES */
 .units_wrapper {
   width: 100%;
   display: flex;
@@ -107,11 +143,13 @@ const downloadFile = async (doc) => {
   justify-content: center;
   align-items: center;
   height: 78vh;
+  position: relative;
 }
 .document_container {
   height: 80vh;
   padding: 8px 12px;
   width: 85%;
+  position: relative;
 }
 .back_btn {
   margin: 12px auto;

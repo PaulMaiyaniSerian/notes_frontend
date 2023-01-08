@@ -9,7 +9,7 @@ import Navbar from "../components/Navbar.vue";
   </div>
 </template>
 <style scoped>
-.units_container{
+.units_container {
   display: grid;
 }
 </style>
