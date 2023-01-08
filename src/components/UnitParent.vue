@@ -188,10 +188,14 @@ onMounted(() => {
     <div class="page_wrapper">
       <!-- HEADER INFO -->
       <div class="header_info">
-        <p>A simple and easier way of accessing your courses' PDF notes.</p>
-        <span>
-          You can select your year of study and semester whose notes you want to
-          download.
+        <p>
+          A simple and easier way of accessing your courses'
+          <span class="pdf_color">PDF</span> notes
+          <span class="under_score">_</span>
+        </p>
+        <span class="info_desc">
+          Simply select your preffered options below to choose the units whose
+          notes you want to download.
         </span>
       </div>
 
@@ -290,11 +294,12 @@ onMounted(() => {
   .header_info {
     width: 100%;
   }
-  .header_info p {
+  .header_info p,
+  .header_info p .pdf_color {
     font-size: 34px !important;
     font-weight: 900;
   }
-  .header_info span {
+  .header_info .info_desc {
     font-size: 18px !important;
   }
   .mini_select_nav {
@@ -367,22 +372,42 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
   padding: 10px;
+  background: var(--dark-background);
+  border-radius: 4px;
 }
 .header_info {
   width: 80%;
   margin: 10px auto;
   color: var(--light-text);
+  padding: 12px 24px;
 }
-.header_info p {
+.header_info p .pdf_color {
+  color: var(--light-green-color);
+}
+.header_info p,
+.header_info p .pdf_color {
   font-size: 44px;
   font-weight: 900;
 }
-.header_info span {
+.header_info .info_desc {
   font-size: 20px;
   font-weight: 300;
 }
+.header_info .under_score {
+  color: var(--light-color);
+  font-weight: bold;
+  animation: beep 0.8s linear infinite;
+}
+@keyframes beep {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
 .mini_select_nav {
-  color: #fff;
+  color: var(--dark-text);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -414,7 +439,7 @@ onMounted(() => {
   margin: auto;
 }
 .mini_select_nav_btn button:hover {
-  background: var(--dim-dark-background);
+  background: var(--dim-light-background);
 }
 .mini_select_nav label {
   font-size: 18px;
@@ -427,12 +452,12 @@ onMounted(() => {
   font-size: 18px;
   font-weight: 300;
   padding: 6px 8px;
-  color: var(--light-text);
+  color: var(--dark-text);
   text-transform: capitalize;
   cursor: pointer;
+  outline: none;
 }
 .mini_select_nav option {
-  background: var(--light-background);
   color: var(--dark-text);
   cursor: pointer;
 }
@@ -448,7 +473,7 @@ onMounted(() => {
 }
 .unit_cont_wrapper {
   width: 45%;
-  border: 1px solid var(--extra-light-color);
+  border: 1px solid var(--dark-background);
   padding: 10px 0;
   display: flex;
   margin: auto;
@@ -466,19 +491,19 @@ onMounted(() => {
   text-decoration: none;
 }
 .units_title {
-  color: var(--light-text);
+  color: var(--dark-text);
   margin: 8px auto;
 }
 .unit_title {
-  color: var(--light-text);
+  color: var(--dark-text);
   font-size: 20px;
   text-transform: capitalize;
   font-weight: 700;
 }
 .unit_icon i {
-  color: var(--light-text);
+  color: var(--dark-text);
 }
 .unit_cont_wrapper:hover .unit_icon i {
-  color: teal;
+  color: var(--light-green-color);
 }
 </style>

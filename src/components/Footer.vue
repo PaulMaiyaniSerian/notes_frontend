@@ -21,7 +21,7 @@ const date = new Date().getFullYear();
   .footer_wrapper {
     position: relative;
     background: transparent;
-    color: var(--light-background);
+    color: var(--dark-background);
     width: 100%;
     padding: 10px 32px;
     font-size: 18px;

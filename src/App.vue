@@ -9,21 +9,20 @@ import { RouterView } from "vue-router";
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  background: var(--extra-dark-color);
   font-family: "Nunito", sans-serif;
 }
 :root {
-  --light-text: #212121;
-  --dark-text: #fff;
-  --dim-light-text: #181818;
+  --light-text: #fff;
+  --dark-text: #000;
+  --dim-light-background: #ddd;
   --dim-dark-background: #181818;
-  --light-background: #000;
-  --dark-background: #f8f8f8;
-  --extra-dark-color: #fff;
-  --extra-light-color: #000;
-  --light-dark-rgba: transparent;
-  --degree-color: #202c80;
-  --diploma-color: #dd9933;
-  --certificate-color: #30b570;
+  --light-background: #f8f8f8;
+  --dark-background: #181818;
+  --extra-dark-color: #000;
+  --extra-light-color: #fff;
+  --light-dark-rgba: rgba(0, 0, 0, 0.8);
+  --blue-color: #202c80;
+  --orange-color: #fd5f00;
+  --light-green-color: #30b570;
 }
 </style>
