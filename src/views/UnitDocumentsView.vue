@@ -1,13 +1,11 @@
 <script setup>
 import UnitParent from "../components/UnitParent.vue";
 import Navbar from "../components/Navbar.vue";
-import Footer from "../components/Footer.vue";
 import { useRoute } from "vue-router";
 import { onMounted, ref } from "vue";
 import { getApi } from "../api/endpoint";
 import axios from "axios";
 import { RouterLink } from "vue-router";
-// import { listenerCount } from "process";
 
 // state
 const route = useRoute();
@@ -96,21 +94,12 @@ const downloadFile = async (doc) => {
         </ol>
       </div>
     </div>
-    <div class="footer_cont">
-      <div class="footer_item">
-        <Footer />
-      </div>
-    </div>
   </div>
 </template>
 
 <style scoped>
 /* SMAL DEVICES */
 @media only screen and (max-width: 768px) and (min-width: 320px) {
-  .footer_item {
-    position: fixed;
-    width: 100%;
-  }
   .document_container {
     position: relative !important;
   }
@@ -148,7 +137,7 @@ const downloadFile = async (doc) => {
 .document_container {
   height: 80vh;
   padding: 8px 12px;
-  width: 85%;
+  width: 86%;
   position: relative;
 }
 .back_btn {
@@ -158,7 +147,7 @@ const downloadFile = async (doc) => {
 }
 .back_btn a {
   text-decoration: none;
-  color: var(--dark-text);
+  color: var(--light-text);
   background: var(--dim-dark-background);
   padding: 8px 18px;
   border-radius: 4px;
@@ -175,7 +164,7 @@ const downloadFile = async (doc) => {
   padding: 8px 16px;
 }
 .documents_list li {
-  background: var(--dim-dark-background);
+  background: var(--dark-background);
   display: flex;
   padding: 0 8px;
   justify-content: center;
@@ -188,10 +177,10 @@ const downloadFile = async (doc) => {
   overflow: hidden;
 }
 .documents_list li:hover {
-  background: var(--light-background);
+  background: var(--extra-dark-color);
 }
 .documents_list a {
-  color: var(--dark-text);
+  color: var(--light-text);
   background: transparent;
 }
 </style>

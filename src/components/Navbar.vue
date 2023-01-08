@@ -67,11 +67,10 @@ import { RouterLink } from "vue-router";
   justify-content: space-between;
   padding-block: 15px;
   border-radius: 4px;
-  background: var(--light-dark-rgba);
 }
 .navbar a {
   text-decoration: none;
-  color: var(--extra-light-color);
+  color: var(--extra-dark-color);
   cursor: pointer;
   border: none;
   outline: none;
@@ -92,10 +91,10 @@ import { RouterLink } from "vue-router";
 }
 
 .nav_search_bar input {
-  border: 1px solid var(--extra-light-color);
+  border: 1px solid var(--extra-dark-color);
   padding: 8px 12px;
   width: 300px;
-  color: var(--extra-light-color);
+  color: var(--dark-color);
   font-size: 14px;
   border-radius: 10px;
   padding-right: 34px;
@@ -104,7 +103,7 @@ import { RouterLink } from "vue-router";
   outline: none;
 }
 .nav_search_bar i {
-  color: var(--extra-light-color);
+  color: var(--extra-dark-color);
   position: absolute;
   right: 4%;
 }
