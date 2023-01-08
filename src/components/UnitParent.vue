@@ -260,7 +260,7 @@ onMounted(() => {
 
       <!-- LOAD FILES BUTTON -->
       <div class="mini_select_nav_btn">
-        <button type="button" @click="handleCourseTypeChange">
+        <button type="button" @click.prevent="handleCourseTypeChange">
           Load Documents
         </button>
       </div>
@@ -269,7 +269,7 @@ onMounted(() => {
     <!-- UNITS_RESPONSE -->
     <div class="units_wrappper">
       <div class="unit_cont_wrapper" v-for="unit in units" :key="unit.id">
-        <a href="#" @click="redirectToUnitDocuments(unit.id)">
+        <a href="#" @click.prevent="redirectToUnitDocuments(unit.id)">
           <div class="unit_title">
             {{ unit.name }}
           </div>
