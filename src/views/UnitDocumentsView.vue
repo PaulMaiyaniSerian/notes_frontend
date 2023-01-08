@@ -89,7 +89,7 @@ const downloadFile = async (doc) => {
       </div>
       <div class="document_container">
         <ol class="documents_list">
-          <li v-for="document in documents"  @click.prevent="downloadFile(document)">
+          <li v-for="document in documents" :key="document.id" @click.prevent="downloadFile(document)">
             <a>{{ getFileName(document.document) }} </a>
           </li>
         </ol>
