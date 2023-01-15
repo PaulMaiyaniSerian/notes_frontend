@@ -90,11 +90,11 @@ const downloadFile = async (doc) => {
         <ol class="documents_list">
           <!-- ADDED A KEY -->
           <li
-            v-for="document in documents"
-            :key="document"
-            @click.prevent="downloadFile(document)"
+            v-for="doc in documents"
+            :key="doc.id"
+            @click.prevent="downloadFile(doc)"
           >
-            <a>{{ getFileName(document.document) }} </a>
+            <a href="#">{{ getFileName(doc.document) }} </a>
           </li>
         </ol>
       </div>
