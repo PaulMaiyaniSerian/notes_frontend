@@ -12,7 +12,7 @@ const router = createRouter({
     },
     {
       path: '/year/:year_id/course/:course_id/semester/:semester_name_id/course_type/:course_type_id/unit/:unit_id/documents',
-      name: 'unit_documents',
+      name: 'unitdocuments',
       component: UnitDocumentsView
     },
   ]
