@@ -18,7 +18,7 @@ const selectedYearId = ref(null);
 // redirect to units document page
 const redirectToUnitDocuments = (unit_id) => {
   router.push({
-    name: "unit_documents",
+    name: "unitdocuments",
     params: {
       unit_id: unit_id,
       year_id: selectedYearId.value,
