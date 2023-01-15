@@ -14,7 +14,8 @@ const router = createRouter({
       name: 'unitdocuments',
       component: UnitDocumentsView
     },
-  ]
+  ],
+  mode: "hash"
 })
 
 export default router
