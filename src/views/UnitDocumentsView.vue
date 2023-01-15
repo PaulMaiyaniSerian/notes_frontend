@@ -1,5 +1,4 @@
 <script setup>
-import UnitParent from "../components/UnitParent.vue";
 import Navbar from "../components/Navbar.vue";
 import { useRoute } from "vue-router";
 import { onMounted, ref } from "vue";
