@@ -18,6 +18,8 @@ const errorMessages = ref(null)
 const progress_value = ref(0)
 const progress_ref = ref(null)
 
+const progress_container_ref = ref(null)
+
 
 const getFileName = (url_str) => {
   const urlObject = new URL(url_str);
@@ -89,7 +91,8 @@ const getFileApi = (file_url) => {
   });
 }
 
-const downloadFile = async (doc) => {
+const startDownload = (doc) => {
+  console.log(doc)
   progress_value.value = 0
   const file_url = doc.document;
 
@@ -103,7 +106,7 @@ const downloadFile = async (doc) => {
       link.download = getFileName(file_url);
       console.log(link)
       document.body.appendChild(link)
-      link.click()
+      // link.click()
       URL.revokeObjectURL(link.href)
       isDocumentsLoading.value = false
     })
@@ -123,6 +126,12 @@ const downloadFile = async (doc) => {
     // stop_loader(is_loading)
     isDocumentsLoading.value = false
   });
+}
+
+const downloadFile = async (doc) => {
+    progress_container_ref.value.style.visibility = `visible`
+    console.log(progress_container_ref.value.style.visibility)
+    startDownload(doc) 
 };
 </script>
 
@@ -136,10 +145,10 @@ const downloadFile = async (doc) => {
       </div>
       <div class="document_container">
 
-        <div class="progress">
+        <div class="progress" ref="progress_container_ref">
           <p>Downloading File ...</p>
           <div class="progress-container">
-              <div class="skill php" ref="progress_ref">{{ progress_value }}</div>
+              <div class="skill php" ref="progress_ref">{{ progress_value }}%</div>
           </div>
         </div>
 
@@ -177,10 +186,12 @@ const downloadFile = async (doc) => {
   align-items: center;
   flex-direction: column;
   flex-wrap: wrap;
+  visibility: hidden;
+  /* visibility: visible !important; */
   
 }
 .progress-container {
-    background-color: var(--dim-dark-background);
+    background-color: var(--gray-background);
     padding: .2rem;
     width: 80%;
         border-radius: 15px;
@@ -188,8 +199,8 @@ const downloadFile = async (doc) => {
 
 .skill {
   
-    background-color: var(--light-text);
-    color: var(--dim-dark-background);
+    background-color: var(--dim-dark-background);
+    color: var(--light-text);
 
     padding: 1%;
     text-align: right;

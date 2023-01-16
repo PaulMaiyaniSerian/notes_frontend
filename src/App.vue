@@ -13,6 +13,7 @@ import { RouterView } from "vue-router";
   scroll-behavior: smooth;
 }
 :root {
+  --gray-background: #ccccccc5;
   --light-text: #fff;
   --dark-text: #000;
   --dim-light-background: #ddd;
