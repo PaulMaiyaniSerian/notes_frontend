@@ -106,7 +106,7 @@ const startDownload = (doc) => {
       link.download = getFileName(file_url);
       console.log(link)
       document.body.appendChild(link)
-      // link.click()
+      link.click()
       URL.revokeObjectURL(link.href)
       isDocumentsLoading.value = false
     })
