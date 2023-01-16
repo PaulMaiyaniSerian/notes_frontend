@@ -5,12 +5,15 @@ import { onMounted, ref } from "vue";
 import { getApi } from "../api/endpoint";
 import axios from "axios";
 import { RouterLink } from "vue-router";
+import BigLoader from "../components/BigLoader.vue";
 // import { listenerCount } from "process";
 
 // state
 const route = useRoute();
 const documents = ref([]);
 const documentRefs = ref([]);
+const isDocumentsLoading = ref(false)
+const errorMessages = ref(null)
 
 const getFileName = (url_str) => {
   const urlObject = new URL(url_str);
@@ -33,23 +36,31 @@ const getUnitDocumentsApi = () => {
 
 onMounted(() => {
   // call get unitDocumentsApi
+  isDocumentsLoading.value = true
   getUnitDocumentsApi()
     .then((response) => {
       console.log(response.data);
       documents.value = response.data;
+      isDocumentsLoading.value = false
     })
     .catch((error) => {
       // check whether error is from network or backend
       if (error.code == "ERR_NETWORK") {
         console.log("Network Error");
+        errorMessages.value = "Network Error"
+        
+
         //   show_popup_error(toast, "Cannot Connect to the server", "Network Error")
       } else {
         // error from the backend
         const error_data = error.response.data;
         console.log(error_data);
+        errorMessages.value = error_data
         //   show_popup_error(toast, "Error Loading Carousel", "Error")
       }
       // stop_loader(is_loading)
+      isDocumentsLoading.value = false
+
     });
 });
 
@@ -70,7 +81,10 @@ const downloadFile = async (doc) => {
 
   const link = document.createElement("a");
 
+
   link.href = URL.createObjectURL(file);
+
+  link.setAttribute("download", "")
 
   link.download = getFileName(file_url);
 
@@ -87,7 +101,9 @@ const downloadFile = async (doc) => {
         <RouterLink to="/"> Back </RouterLink>
       </div>
       <div class="document_container">
-        <ol class="documents_list">
+        <BigLoader v-if="isDocumentsLoading"/>
+
+        <ol class="documents_list" v-else>
           <!-- ADDED A KEY -->
           <li
             v-for="doc in documents"
@@ -97,6 +113,10 @@ const downloadFile = async (doc) => {
             <a href="#">{{ getFileName(doc.document) }} </a>
           </li>
         </ol>
+
+        <div class="errorMessages" v-if="errorMessages">
+            {{ errorMessages }}
+        </div>
       </div>
     </div>
   </div>

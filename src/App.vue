@@ -10,6 +10,7 @@ import { RouterView } from "vue-router";
   padding: 0;
   box-sizing: border-box;
   font-family: "Nunito", sans-serif;
+  scroll-behavior: smooth;
 }
 :root {
   --light-text: #fff;
