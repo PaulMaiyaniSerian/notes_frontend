@@ -383,7 +383,9 @@ onMounted(() => {
 
   .mini_select_nav_btn {
     width: 80%;
+
     margin: 12px auto !important;
+    margin-top: 10% !important;
     display: flex;
     align-items: center;
   }
