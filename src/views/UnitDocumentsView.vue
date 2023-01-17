@@ -245,17 +245,18 @@ const downloadFile = async (doc) => {
   }
 
   .document_container {
-    position: relative !important;
+    /* position: relative !important; */
   }
 
   .units_wrapper {
     position: relative !important;
+    /* background: gold; */
     /* background: lime; */
   }
 
   .back_btn {
+    top: 0;
     position: absolute;
-    top: 0%;
     margin: 12px auto !important;
   }
 
@@ -264,6 +265,7 @@ const downloadFile = async (doc) => {
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
+    /* background: lime; */
   }
 
   .documents_list li {
