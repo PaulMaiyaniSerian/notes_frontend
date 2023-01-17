@@ -1,17 +1,25 @@
 <script setup>
-import UnitParent from "../components/UnitParent.vue";
 import Navbar from "../components/Navbar.vue";
 import { useRoute } from "vue-router";
-import { onMounted, ref } from "vue";
+import { onMounted, ref , watch} from "vue";
 import { getApi } from "../api/endpoint";
 import axios from "axios";
 import { RouterLink } from "vue-router";
+import BigLoader from "../components/BigLoader.vue";
 // import { listenerCount } from "process";
 
 // state
 const route = useRoute();
 const documents = ref([]);
 const documentRefs = ref([]);
+const isDocumentsLoading = ref(false)
+const errorMessages = ref(null)
+
+const progress_value = ref(0)
+const progress_ref = ref(null)
+
+const progress_container_ref = ref(null)
+
 
 const getFileName = (url_str) => {
   const urlObject = new URL(url_str);
@@ -32,50 +40,98 @@ const getUnitDocumentsApi = () => {
   });
 };
 
+
 onMounted(() => {
+  if(progress_ref.value != null){
+    progress_ref.value.style.width = "0"
+  }
   // call get unitDocumentsApi
+  isDocumentsLoading.value = true
   getUnitDocumentsApi()
     .then((response) => {
       console.log(response.data);
       documents.value = response.data;
+      isDocumentsLoading.value = false
     })
     .catch((error) => {
       // check whether error is from network or backend
       if (error.code == "ERR_NETWORK") {
         console.log("Network Error");
+        errorMessages.value = "Network Error"
         //   show_popup_error(toast, "Cannot Connect to the server", "Network Error")
       } else {
         // error from the backend
-        const error_data = error.response.data;
-        console.log(error_data);
+        if(error.response){
+          const error_data = error.response.data;
+          console.log(error_data);
+          errorMessages.value = error_data
+        }
         //   show_popup_error(toast, "Error Loading Carousel", "Error")
       }
       // stop_loader(is_loading)
+      isDocumentsLoading.value = false
+
     });
 });
 
-const downloadFile = async (doc) => {
-  const file_url = doc.document;
-  const item_ref = documentRefs.value.find((value) => {
-    if (value.attributes.data_key.value == doc.id) {
-      console.log("found");
-      return true;
-    }
-  });
+watch([progress_value], (value) => {
+  if(progress_ref.value != null){
+    progress_ref.value.style.width = `${value}%`
+  }
+})
 
-  const response = await axios.get(file_url, {
+const getFileApi = (file_url) => {
+  return getApi.get(file_url, {
     responseType: "blob",
+    onDownloadProgress : (progressEvent) => {
+        progress_value.value = parseInt(Math.round((progressEvent.loaded * 100) / progressEvent.total))
+        console.log(progress_value.value)
+        // console.log(parseInt(Math.round((progressEvent.loaded * 100) / progressEvent.total))) 
+    },
   });
+}
 
-  const file = response.data;
+const startDownload = (doc) => {
+  console.log(doc)
+  progress_value.value = 0
+  const file_url = doc.document;
 
-  const link = document.createElement("a");
+  isDocumentsLoading.value = true
+  getFileApi(file_url)
+  .then((response) => {
+      console.log(response.data);
+      const file = response.data;
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(file);
+      link.download = getFileName(file_url);
+      console.log(link)
+      document.body.appendChild(link)
+      link.click()
+      URL.revokeObjectURL(link.href)
+      isDocumentsLoading.value = false
+    })
+  .catch((error) => {
+    // check whether error is from network or backend
+    if (error.code == "ERR_NETWORK") {
+      console.log("Network Error");
+      errorMessages.value = "Network Error"
+      // show_popup_error(toast, "Cannot Connect to the server", "Network Error")
+    } else {
+      // error from the backend
+      const error_data = error.response.data;
+      console.log(error_data);
+      errorMessages.value = error_data
+      // show_popup_error(toast, "Error Loading Carousel", "Error")
+    }
+    // stop_loader(is_loading)
+    isDocumentsLoading.value = false
+  });
+}
 
-  link.href = URL.createObjectURL(file);
-
-  link.download = getFileName(file_url);
-
-  link.click();
+const downloadFile = async (doc) => {
+    progress_container_ref.value.style.visibility = `visible`
+    console.log(progress_container_ref.value.style.visibility)
+    startDownload(doc) 
 };
 </script>
 
@@ -88,22 +144,80 @@ const downloadFile = async (doc) => {
         <RouterLink to="/"> Back </RouterLink>
       </div>
       <div class="document_container">
-        <ol class="documents_list">
+
+        <div class="progress" ref="progress_container_ref">
+          <p>Downloading File ...</p>
+          <div class="progress-container">
+              <div class="skill php" ref="progress_ref">{{ progress_value }}%</div>
+          </div>
+        </div>
+
+        <BigLoader v-if="isDocumentsLoading"/>
+
+        <ol class="documents_list" v-else>
           <!-- ADDED A KEY -->
           <li
-            v-for="document in documents"
-            :key="document"
-            @click.prevent="downloadFile(document)"
+            v-for="doc in documents"
+            :key="doc.id"
+            @click.prevent="downloadFile(doc)"
           >
-            <a>{{ getFileName(document.document) }} </a>
+            <a href="#">{{ getFileName(doc.document) }} </a>
           </li>
         </ol>
+
+        <div class="errorMessages" v-if="errorMessages">
+            {{ errorMessages }}
+        </div>
+
+        
+        
+        
+
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
+.progress{
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+  visibility: hidden;
+  /* visibility: visible !important; */
+  
+}
+.progress-container {
+    background-color: var(--gray-background);
+    padding: .2rem;
+    width: 80%;
+        border-radius: 15px;
+}
+
+.skill {
+  
+    background-color: var(--dim-dark-background);
+    color: var(--light-text);
+
+    padding: 1%;
+    text-align: right;
+    font-size: 20px;
+    border-radius: 15px;
+    
+}
+
+.html {
+    width: 80%;
+}
+
+.php {
+   width: 0%;
+}
+
+
 /* SMAL DEVICES */
 @media only screen and (max-width: 768px) and (min-width: 320px) {
   .document_container {
@@ -122,6 +236,9 @@ const downloadFile = async (doc) => {
     width: 50% !important;
     flex: 1 0 40%;
     font-size: 12px;
+  }
+  .documents_list li a{
+    text-decoration: none;
   }
   .footer_cont {
     position: absolute;
@@ -186,6 +303,7 @@ const downloadFile = async (doc) => {
   background: var(--extra-dark-color);
 }
 .documents_list a {
+  text-decoration: none;
   color: var(--light-text);
   background: transparent;
 }

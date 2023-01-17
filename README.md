@@ -1,6 +1,11 @@
+## Live version 
+
+[Live](https://clinquant-croissant-af0eed.netlify.app)
+
+
 # notes_frontend
 
-This template should help get you started developing with Vue 3 in Vite.
+This template should help get you started with setting up this project
 
 ## Recommended IDE Setup
 
