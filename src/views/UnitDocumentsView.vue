@@ -6,6 +6,7 @@ import { getApi } from "../api/endpoint";
 import axios from "axios";
 import { RouterLink } from "vue-router";
 import BigLoader from "../components/BigLoader.vue";
+import Footer from "../components/Footer.vue";
 // import { listenerCount } from "process";
 
 // state
@@ -168,8 +169,10 @@ const downloadFile = async (doc) => {
           {{ errorMessages }}
         </div>
 
+        <div class="footer_cont">
 
-
+          <Footer />
+        </div>
 
 
       </div>
@@ -178,6 +181,10 @@ const downloadFile = async (doc) => {
 </template>
 
 <style scoped>
+.footer_cont {
+  display: none;
+}
+
 .big_loader_cont {
   position: absolute;
   top: 0%;
@@ -225,7 +232,11 @@ const downloadFile = async (doc) => {
 
 
 /* SMAL DEVICES */
-@media only screen and (max-width: 768px) and (min-width: 320px) {
+@media only screen and (max-width: 768px) and (min-width: 280px) {
+  .footer_cont {
+    display: contents;
+  }
+
   .big_loader_cont {
     position: absolute;
     top: 0%;
@@ -234,7 +245,7 @@ const downloadFile = async (doc) => {
   }
 
   .document_container {
-    /* position: relative !important; */
+    position: relative !important;
   }
 
   .back_btn {
@@ -258,11 +269,11 @@ const downloadFile = async (doc) => {
     text-decoration: none;
   }
 
-  .footer_cont {
+  /* .footer_cont {
     position: absolute;
     width: 100%;
     top: 94%;
-  }
+  } */
 }
 
 /* LARGE DEVICES */

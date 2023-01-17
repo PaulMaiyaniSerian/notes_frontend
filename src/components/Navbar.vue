@@ -12,9 +12,7 @@ import { RouterLink } from "vue-router";
           </RouterLink>
         </div>
         <div class="nav_search_bar">
-          <input type="search" placeholder="Search.." /><i
-            class="fa fa-search"
-          ></i>
+          <input type="search" placeholder="Search.." /><i class="fa fa-search"></i>
         </div>
       </nav>
     </div>
@@ -23,16 +21,18 @@ import { RouterLink } from "vue-router";
 
 <style scoped>
 /* SMAL DEVICES */
-@media only screen and (max-width: 768px) and (min-width: 320px) {
+@media only screen and (max-width: 768px) and (min-width: 280px) {
   .wrapper {
     margin: auto;
     padding: 0;
   }
+
   .container {
     width: 100%;
     margin: 16px auto;
     padding: 0;
   }
+
   .navbar {
     display: flex;
     flex-direction: column;
@@ -40,19 +40,23 @@ import { RouterLink } from "vue-router";
     align-content: center;
     padding: 0;
   }
+
   .logo {
     width: 100%;
     margin: auto;
     margin-bottom: 12px;
   }
+
   .nav_search_bar {
     width: 100%;
     margin: auto;
   }
+
   .nav_search_bar input {
     width: 100% !important;
   }
 }
+
 /* LARGE DEVICES */
 .container {
   width: 95%;
@@ -60,6 +64,7 @@ import { RouterLink } from "vue-router";
   padding: 15px;
   position: relative;
 }
+
 .navbar {
   display: flex;
   flex-wrap: wrap;
@@ -68,6 +73,7 @@ import { RouterLink } from "vue-router";
   padding-block: 15px;
   border-radius: 4px;
 }
+
 .navbar a {
   text-decoration: none;
   color: var(--extra-dark-color);
@@ -78,10 +84,12 @@ import { RouterLink } from "vue-router";
   font-size: 18px;
   font-weight: 300;
 }
+
 .logo h1 {
   text-transform: uppercase;
   font-weight: 800;
 }
+
 .nav_search_bar {
   margin: 0 14px;
   display: flex;
@@ -99,9 +107,11 @@ import { RouterLink } from "vue-router";
   border-radius: 10px;
   padding-right: 34px;
 }
+
 .nav_search_bar input:focus {
   outline: none;
 }
+
 .nav_search_bar i {
   color: var(--extra-dark-color);
   position: absolute;
