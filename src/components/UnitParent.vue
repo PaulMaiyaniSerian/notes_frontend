@@ -240,6 +240,7 @@ onMounted(() => {
             id="select"
             class="select-class"
             v-model="selectedCourseId"
+        
           >
             <!-- ADDED A KEY -->
             <option :value="course.id" v-for="course in courses" :key="course">
@@ -254,12 +255,14 @@ onMounted(() => {
             id="select"
             class="select-class"
             v-model="selectedSemesterNameId"
+      
           >
             <!-- ADDED A KEY -->
             <option
               :value="semester.semester_name"
               v-for="semester in semesters"
               :key="semester.semester"
+            
             >
               {{ semester.semester_str_name }}
             </option>
@@ -270,7 +273,10 @@ onMounted(() => {
       <!-- LOAD FILES BUTTON -->
       <div class="mini_select_nav_btn">
         <button type="button" @click.prevent="handleCourseTypeChange">
-          Load Documents
+     
+   Load Documents
+       
+       
         </button>
       </div>
     </div>
