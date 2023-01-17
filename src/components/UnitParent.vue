@@ -73,7 +73,7 @@ const handleCourseTypeChange = () => {
       isUnitsLoading.value = false;
     })
     .catch((error) => {
-      message.value = "Please Select the above input fields first!";
+      message.value = "Select all the above Input fields first!";
 
       // check whether error is from network or backend
       if (error.code == "ERR_NETWORK") {
@@ -247,13 +247,7 @@ onMounted(() => {
         <div class="select_option">
           <label for="select">Year:</label>
           <Loader v-if="isYearsLoading" />
-          <select
-            v-else
-            name="year"
-            id="select"
-            class="select-class"
-            v-model="selectedYearId"
-          >
+          <select v-else name="year" id="select" class="select-class" v-model="selectedYearId">
             <!-- ADDED A KEY -->
             <option :value="year.id" v-for="year in years" :key="year">
               {{ year.name }}
@@ -264,19 +258,9 @@ onMounted(() => {
           <label for="select">CourseType:</label>
           <Loader v-if="isCourseTypesLoading" />
 
-          <select
-            v-else
-            name="course_type"
-            id="select"
-            class="select-class"
-            v-model="selectedCourseTypeId"
-          >
+          <select v-else name="course_type" id="select" class="select-class" v-model="selectedCourseTypeId">
             <!-- ADDED A KEY -->
-            <option
-              :value="course_type.id"
-              v-for="course_type in course_types"
-              :key="course_type"
-            >
+            <option :value="course_type.id" v-for="course_type in course_types" :key="course_type">
               {{ course_type.name }}
             </option>
           </select>
@@ -285,13 +269,7 @@ onMounted(() => {
           <label for="select">Course Name:</label>
           <Loader v-if="isCoursesLoading" />
 
-          <select
-            v-else
-            name="course_name"
-            id="select"
-            class="select-class"
-            v-model="selectedCourseId"
-          >
+          <select v-else name="course_name" id="select" class="select-class" v-model="selectedCourseId">
             <!-- ADDED A KEY -->
             <option :value="course.id" v-for="course in courses" :key="course">
               {{ course.name }}
@@ -302,19 +280,9 @@ onMounted(() => {
           <label for="select">Semester:</label>
           <Loader v-if="isSemestersLoading" />
 
-          <select
-            v-else
-            name="semester"
-            id="select"
-            class="select-class"
-            v-model="selectedSemesterNameId"
-          >
+          <select v-else name="semester" id="select" class="select-class" v-model="selectedSemesterNameId">
             <!-- ADDED A KEY -->
-            <option
-              :value="semester.semester_name"
-              v-for="semester in semesters"
-              :key="semester.semester"
-            >
+            <option :value="semester.semester_name" v-for="semester in semesters" :key="semester.semester">
               {{ semester.semester_str_name }}
             </option>
           </select>
@@ -335,12 +303,7 @@ onMounted(() => {
         <BigLoader />
       </div>
 
-      <div
-        class="unit_cont_wrapper"
-        v-else
-        v-for="unit in units"
-        :key="unit.id"
-      >
+      <div class="unit_cont_wrapper" v-else v-for="unit in units" :key="unit.id">
         <a @click.prevent="redirectToUnitDocuments(unit.id)">
           <div class="unit_title">
             {{ unit.name }}
@@ -365,20 +328,25 @@ onMounted(() => {
   .units_container {
     width: 100%;
   }
+
   .page_wrapper {
     width: 100% !important;
   }
+
   .header_info {
     width: 100%;
   }
+
   .header_info p,
   .header_info p .pdf_color {
     font-size: 34px !important;
     font-weight: 900;
   }
+
   .header_info .info_desc {
     font-size: 18px !important;
   }
+
   .mini_select_nav {
     width: 100%;
     display: flex;
@@ -387,20 +355,24 @@ onMounted(() => {
     height: 55vh !important;
     padding: 10px 0;
   }
+
   .select_option {
     width: 80%;
     display: flex;
     flex-direction: column;
   }
+
   .select_option label {
     margin: 2px;
     text-align: left;
     width: 100%;
   }
+
   .select_option select {
     width: 100%;
     outline: none;
   }
+
   .mini_select_nav option {
     width: 100%;
     color: var(--dark-text);
@@ -408,27 +380,36 @@ onMounted(() => {
     padding: 0;
     margin: 0;
   }
+
   .mini_select_nav_btn {
     width: 80%;
-    margin: auto;
+    margin: 12px auto !important;
     display: flex;
     align-items: center;
   }
+
   .units_wrappper {
-    width: 100%;
-    min-height: 70vh;
+    width: 100% !important;
+    /* background: lime; */
+    padding: 0 10px;
+    display: flex;
+    flex-direction: column;
+    /* min-height: 70vh; */
   }
+
   .unit_cont_wrapper {
+    width: 90% !important;
     padding: 4px;
     font-size: 75%;
+    /* background: red; */
   }
+
   .unit_title {
     font-size: 16px !important;
   }
+
   .unit_cont_wrapper a {
     padding: 4px;
-    display: flex;
-    flex-direction: column;
   }
 }
 
@@ -442,6 +423,7 @@ onMounted(() => {
   margin: auto;
   height: 85vh;
 }
+
 .page_wrapper {
   width: 80%;
   margin: auto;
@@ -453,37 +435,45 @@ onMounted(() => {
   background: var(--dark-background);
   border-radius: 4px;
 }
+
 .header_info {
   width: 80%;
   margin: 10px auto;
   color: var(--light-text);
   padding: 12px 24px;
 }
+
 .header_info p .pdf_color {
   color: var(--light-green-color);
 }
+
 .header_info p,
 .header_info p .pdf_color {
   font-size: 40px;
   font-weight: 900;
 }
+
 .header_info .info_desc {
   font-size: 20px;
   font-weight: 300;
 }
+
 .header_info .under_score {
   color: var(--light-color);
   font-weight: bold;
   animation: beep 0.8s linear infinite;
 }
+
 @keyframes beep {
   0% {
     opacity: 1;
   }
+
   100% {
     opacity: 0;
   }
 }
+
 .mini_select_nav {
   color: var(--dark-text);
   display: flex;
@@ -496,15 +486,18 @@ onMounted(() => {
   padding: 0 6px;
   margin: auto;
 }
+
 .select_option {
   display: flex;
   justify-content: space-around;
   align-items: center;
   padding: 0 4px;
 }
+
 .mini_select_nav_btn {
   margin: 2% auto;
 }
+
 .mini_select_nav_btn button {
   color: var(--dark-text);
   border: none;
@@ -516,14 +509,17 @@ onMounted(() => {
   border-radius: 6px;
   margin: auto;
 }
+
 .mini_select_nav_btn button:hover {
   background: var(--dim-light-background);
 }
+
 .mini_select_nav label {
   font-size: 18px;
   margin-right: 8px;
   color: var(--light-text);
 }
+
 .mini_select_nav select {
   border: 1px solid var(--light-background);
   border-radius: 4px;
@@ -535,63 +531,75 @@ onMounted(() => {
   cursor: pointer;
   outline: none;
 }
+
 .mini_select_nav option {
   color: var(--dark-text);
   cursor: pointer;
 }
+
 .units_wrappper {
   /* position: relative; */
   width: 80%;
   display: flex;
+  /* flex-direction: column; */
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
   gap: 4%;
-  margin: auto;
+  margin: 10px auto;
   margin-bottom: 12px;
+  /* background: lime; */
 }
+
 .unit_cont_wrapper {
-  width: 30%;
+  width: 40%;
   border: 1px solid var(--dark-background);
-  /* padding: 5px 0; */
+  padding: 5px 0;
   display: flex;
   margin: auto;
   justify-content: center;
-  align-items: center;
   border-radius: 4px;
-  margin: 12px auto;
+  margin: 12px 0;
   flex-direction: column;
   cursor: pointer;
 }
+
 .unit_cont_wrapper a {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   width: 100%;
   text-decoration: none;
-  padding: 4px;
+  padding: 10px;
 }
+
 .units_title {
   color: var(--dark-text);
   margin: 8px auto;
 }
+
 .unit_title {
   color: var(--dark-text);
   font-size: 20px;
   text-transform: uppercase;
   font-weight: 700;
 }
+
 .unit_icon i {
   color: var(--dark-text);
 }
+
 .unit_cont_wrapper:hover .unit_icon i {
   color: var(--light-green-color);
 }
+
 .big_loader_canvas {
   position: absolute;
-  height: 100vh;
   width: 100%;
+
   top: 0%;
-  background: #fff;
+
+  left: 0%;
   /* background: rgba(255,255,255,0.6); */
 }
 </style>
