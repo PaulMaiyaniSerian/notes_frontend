@@ -5,7 +5,7 @@ import { getApi } from "../api/endpoint";
 import Footer from "../components/Footer.vue";
 import Loader from "./Loader.vue";
 import BigLoader from "./BigLoader.vue";
-import Scroll from './Scroll.vue'
+import Scroll from "./Scroll.vue";
 
 const router = useRouter();
 const units = ref([]);
@@ -23,7 +23,7 @@ const selectedSemesterNameId = ref(null);
 const years = ref([]);
 const isYearsLoading = ref(false);
 const selectedYearId = ref(null);
-const isOpen =ref(false);
+const isOpen = ref(false);
 const message = ref(null);
 
 // redirect to units document page
@@ -59,7 +59,7 @@ const handleCourseTypeChange = () => {
   console.log(selectedYearId.value);
   console.log(isOpen.value);
 
-
+  isOpen.value = isOpen;
   isUnitsLoading.value = true;
   console.log("start units loader");
   loadUnitsWithDocsApi()
@@ -71,7 +71,6 @@ const handleCourseTypeChange = () => {
         message.value = "No Documents Found";
       } else {
         message.value = null;
-        isOpen.value = isOpen
       }
 
       isUnitsLoading.value = false;
@@ -164,6 +163,7 @@ const getYearsApi = () => {
 onMounted(() => {
   isYearsLoading.value = true;
   isOpen.value = !isOpen;
+
   getYearsApi()
     .then((response) => {
       console.log(response.data);
@@ -227,11 +227,8 @@ onMounted(() => {
       }
       // stop_loader(is_loading)
       isCoursesLoading.value = false;
-      
     });
-
 });
-
 </script>
 
 <template>
@@ -331,19 +328,15 @@ onMounted(() => {
 
       <!-- LOAD FILES BUTTON -->
       <div class="mini_select_nav_btn">
-
-        <button @click.prevent="handleCourseTypeChange">
-          Load Units
-        </button>
-
+        <button @click="handleCourseTypeChange">Load Units</button>
       </div>
       <div class="scroll_bar" v-if="isOpen">
-<Scroll/>
-</div>
+        <Scroll />
+      </div>
     </div>
 
     <!-- UNITS_RESPONSE -->
-    <div class="units_wrappper" ref="unitsref">
+    <div :class="isOpen ? 'units_wrappper' : ''" ref="unitsref">
       <!-- <h1>Units</h1> -->
       <div class="big_loader_canvas" v-if="isUnitsLoading">
         <BigLoader />
@@ -374,21 +367,11 @@ onMounted(() => {
   </div>
 </template>
 <style scoped>
-*{
-
+* {
   scroll-behavior: smooth;
 }
 /* SMAL DEVICES */
 @media only screen and (max-width: 768px) and (min-width: 280px) {
-  /* .units_wrappper1{
-    display: contents;
-    height: 50vh;
-  } */
-  .it_is_closed{
-    display: none;
-    /* background: lime;
-    height: 10vh; */
-  }
   .units_container {
     width: 100%;
   }
@@ -453,15 +436,19 @@ onMounted(() => {
     display: flex;
     align-items: center;
   }
-
+  .it_is_closed {
+    /* height: 70vh; */
+    opacity: 0;
+  }
   .units_wrappper {
+    position: relative;
     width: 100% !important;
     /* background: lime; */
     padding: 0 10px;
     display: flex;
     flex-direction: column;
     /* height: 50vh; */
-    /* min-height: 70vh; */
+    min-height: 70vh;
   }
 
   .unit_cont_wrapper {

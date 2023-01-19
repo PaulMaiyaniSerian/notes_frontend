@@ -1,6 +1,6 @@
 <template>
 <div class="mouse_cont">
- <p>Scroll Down</p>
+ <p>Scroll Down/ Click above button to scroll</p>
 
     <span class="mouse">
        
@@ -10,6 +10,8 @@
 
 </template>
 <style scoped>
+/* SMAL DEVICES */
+@media only screen and (max-width: 768px) and (min-width: 280px) {
 .mouse_cont p{
     color: var(--light-text);
 }
@@ -44,5 +46,12 @@
         opacity:1;
         transform: translateY(1rem);
     }
+}}
+/* SMAL DEVICES */
+@media only screen and  (min-width: 769px) {
+.mouse_cont{
+    /* opacity: 0; */
+    display: none;
+}
 }
 </style>
