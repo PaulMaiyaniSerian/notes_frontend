@@ -5,6 +5,7 @@ import { getApi } from "../api/endpoint";
 import Footer from "../components/Footer.vue";
 import Loader from "./Loader.vue";
 import BigLoader from "./BigLoader.vue";
+import Scroll from './Scroll.vue'
 
 const router = useRouter();
 const units = ref([]);
@@ -22,7 +23,7 @@ const selectedSemesterNameId = ref(null);
 const years = ref([]);
 const isYearsLoading = ref(false);
 const selectedYearId = ref(null);
-
+const isOpen =ref(false);
 const message = ref(null);
 
 // redirect to units document page
@@ -56,6 +57,8 @@ const handleCourseTypeChange = () => {
   console.log(selectedCourseId.value);
   console.log(selectedSemesterNameId.value);
   console.log(selectedYearId.value);
+  console.log(isOpen.value);
+
 
   isUnitsLoading.value = true;
   console.log("start units loader");
@@ -68,6 +71,7 @@ const handleCourseTypeChange = () => {
         message.value = "No Documents Found";
       } else {
         message.value = null;
+        isOpen.value = isOpen
       }
 
       isUnitsLoading.value = false;
@@ -89,7 +93,7 @@ const handleCourseTypeChange = () => {
       isUnitsLoading.value = false;
     });
 
-  console.log(unitsref);
+  console.log(unitsref + "THis is the function");
   const element = unitsref.value;
   const top = element.offsetTop;
 
@@ -159,6 +163,7 @@ const getYearsApi = () => {
 
 onMounted(() => {
   isYearsLoading.value = true;
+  isOpen.value = !isOpen;
   getYearsApi()
     .then((response) => {
       console.log(response.data);
@@ -222,8 +227,11 @@ onMounted(() => {
       }
       // stop_loader(is_loading)
       isCoursesLoading.value = false;
+      
     });
+
 });
+
 </script>
 
 <template>
@@ -247,7 +255,13 @@ onMounted(() => {
         <div class="select_option">
           <label for="select">Year:</label>
           <Loader v-if="isYearsLoading" />
-          <select v-else name="year" id="select" class="select-class" v-model="selectedYearId">
+          <select
+            v-else
+            name="year"
+            id="select"
+            class="select-class"
+            v-model="selectedYearId"
+          >
             <!-- ADDED A KEY -->
             <option :value="year.id" v-for="year in years" :key="year">
               {{ year.name }}
@@ -258,9 +272,19 @@ onMounted(() => {
           <label for="select">CourseType:</label>
           <Loader v-if="isCourseTypesLoading" />
 
-          <select v-else name="course_type" id="select" class="select-class" v-model="selectedCourseTypeId">
+          <select
+            v-else
+            name="course_type"
+            id="select"
+            class="select-class"
+            v-model="selectedCourseTypeId"
+          >
             <!-- ADDED A KEY -->
-            <option :value="course_type.id" v-for="course_type in course_types" :key="course_type">
+            <option
+              :value="course_type.id"
+              v-for="course_type in course_types"
+              :key="course_type"
+            >
               {{ course_type.name }}
             </option>
           </select>
@@ -269,7 +293,13 @@ onMounted(() => {
           <label for="select">Course Name:</label>
           <Loader v-if="isCoursesLoading" />
 
-          <select v-else name="course_name" id="select" class="select-class" v-model="selectedCourseId">
+          <select
+            v-else
+            name="course_name"
+            id="select"
+            class="select-class"
+            v-model="selectedCourseId"
+          >
             <!-- ADDED A KEY -->
             <option :value="course.id" v-for="course in courses" :key="course">
               {{ course.name }}
@@ -280,9 +310,19 @@ onMounted(() => {
           <label for="select">Semester:</label>
           <Loader v-if="isSemestersLoading" />
 
-          <select v-else name="semester" id="select" class="select-class" v-model="selectedSemesterNameId">
+          <select
+            v-else
+            name="semester"
+            id="select"
+            class="select-class"
+            v-model="selectedSemesterNameId"
+          >
             <!-- ADDED A KEY -->
-            <option :value="semester.semester_name" v-for="semester in semesters" :key="semester.semester">
+            <option
+              :value="semester.semester_name"
+              v-for="semester in semesters"
+              :key="semester.semester"
+            >
               {{ semester.semester_str_name }}
             </option>
           </select>
@@ -291,19 +331,30 @@ onMounted(() => {
 
       <!-- LOAD FILES BUTTON -->
       <div class="mini_select_nav_btn">
-        <button href="#units_wrapper" @click="handleCourseTypeChange">
+
+        <button @click.prevent="handleCourseTypeChange">
           Load Units
         </button>
+
       </div>
+      <div class="scroll_bar" v-if="isOpen">
+<Scroll/>
+</div>
     </div>
 
     <!-- UNITS_RESPONSE -->
-    <div class="units_wrappper" id="units_wrappper" ref="unitsref">
+    <div class="units_wrappper" ref="unitsref">
+      <!-- <h1>Units</h1> -->
       <div class="big_loader_canvas" v-if="isUnitsLoading">
         <BigLoader />
       </div>
 
-      <div class="unit_cont_wrapper" v-else v-for="unit in units" :key="unit.id">
+      <div
+        class="unit_cont_wrapper"
+        v-else
+        v-for="unit in units"
+        :key="unit.id"
+      >
         <a @click.prevent="redirectToUnitDocuments(unit.id)">
           <div class="unit_title">
             {{ unit.name }}
@@ -323,8 +374,21 @@ onMounted(() => {
   </div>
 </template>
 <style scoped>
+*{
+
+  scroll-behavior: smooth;
+}
 /* SMAL DEVICES */
 @media only screen and (max-width: 768px) and (min-width: 280px) {
+  /* .units_wrappper1{
+    display: contents;
+    height: 50vh;
+  } */
+  .it_is_closed{
+    display: none;
+    /* background: lime;
+    height: 10vh; */
+  }
   .units_container {
     width: 100%;
   }
@@ -396,6 +460,7 @@ onMounted(() => {
     padding: 0 10px;
     display: flex;
     flex-direction: column;
+    /* height: 50vh; */
     /* min-height: 70vh; */
   }
 
